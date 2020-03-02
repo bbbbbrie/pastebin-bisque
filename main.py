@@ -52,13 +52,12 @@ def log_error(e):
 
 def process_the_find(find):
     """
-    This function takes a potential paste and assembles the raw Pastebin url.ss
-    :param find:
-    :return:
+    This function takes a potential paste and assembles the raw Pastebin url.
+    :param find: The string that contains a paste.
+    :return: Return the full Pastebin URL and the short paste string.
     """
     the_ref = find.get('href')
     pastebin_url = "https://pastebin.com/raw" + the_ref
-    # loguru.logger.info(pastebin_url)
     loguru.logger.info(find.contents)
     return pastebin_url, the_ref
 
@@ -68,9 +67,9 @@ def get_and_save_the_paste(the_target, pastebin_url, pastebin_ref):
     This function does the heavy listing. It does the Python equivalent of mkdir -p to prepare the environment for the
     download. The paste that has been identified is downloaded and saved to a directory that reflects the owning user.
     :param the_target: This is the user whose Pastebin profile we are looking at.
-    :param pastebin_url:
-    :param pastebin_ref:
-    :return:
+    :param pastebin_url: The full Pastebin URL.
+    :param pastebin_ref: The short paste string, which is also the file name.
+    :return: Nothing.
     """
     the_path = "pastes/" + the_target
     if not os.path.exists(the_path):
@@ -88,6 +87,8 @@ def get_and_save_the_paste(the_target, pastebin_url, pastebin_ref):
 def count_all_pages(div_of_pages):
     """
     Count the number of pages that this user's Pastebin account has.
+    :param div_of_pages: The <div> containing the number of pages in the user's Pastebin profile
+    :return: The number of pages that user's profile has.
     """
     a_tags_in_div = [tag for tag in div_of_pages[0].find_all("a")]
     # We subtract 1 because there are two links to the last page (by number and 'Oldest')
@@ -111,11 +112,11 @@ def parse_page_for_pastes(raw_html):
             pastebin_url, pastebin_ref = process_the_find(nice_find)
             all_pastebin_urls.add(pastebin_url)
             get_and_save_the_paste(the_target, pastebin_url, pastebin_ref)
-    loguru.logger.success("Turning the page.)
+    loguru.logger.success("Turning the page.")
 
 
 def count_download_all_pastes(pastebin_profile, the_target):
-    all_pastebin_urls = set()
+    # all_pastebin_urls = set()
     loguru.logger.info(pastebin_profile)
     the_hunt = simple_get(pastebin_profile)
     chowder = BeautifulSoup(the_hunt, 'html.parser')
