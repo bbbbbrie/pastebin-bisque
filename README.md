@@ -7,3 +7,5 @@ The Pastebin Bisque is a small Python utility that uses BeautifulSoup to scrape 
 `python main.py -u pastebinusername`
 
 Be sure to replace `pastebinusername` with a Pastebin username that you care about.
+
+[![asciicast](https://asciinema.org/a/306382.svg)](https://asciinema.org/a/306382)
