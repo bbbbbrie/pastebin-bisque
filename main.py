@@ -104,6 +104,12 @@ def count_all_pages(div_of_pages):
 
 
 def parse_page_for_pastes(raw_html):
+    """
+    This function takes the raw HTML of a page of a user's Pastebin profile and does a lot of heavy lifting.
+    Every paste on the page is found via regex, retrieved and saved to disk.
+    :param raw_html: The result of a GET request.
+    :return: Absolutely nothing.
+    """
     pastes_per_page = int()
     all_pastebin_urls = set()
     soup = BeautifulSoup(raw_html, 'html.parser')
@@ -155,6 +161,11 @@ def count_download_all_pastes(pastebin_profile, the_target):
 
 
 def main(the_target):
+    """
+    This function accepts a username as input.
+    :param the_target: Pastebin username
+    :return: Absolutely nothing
+    """
     loguru.logger.info(
         "PASTEBIN USER SELECTED: {the_user}", the_user=the_target)
     pastebin_profile = "https://pastebin.com/u/" + the_target
