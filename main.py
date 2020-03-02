@@ -108,9 +108,10 @@ def parse_page_for_pastes(raw_html):
     This function takes the raw HTML of a page of a user's Pastebin profile and does a lot of heavy lifting.
     Every paste on the page is found via regex, retrieved and saved to disk.
     :param raw_html: The result of a GET request.
-    :return: Absolutely nothing.
+    :return: How many pastes were saved from this page
     """
     pastes_per_page = int()
+    pastes_saved = int()
     all_pastebin_urls = set()
     soup = BeautifulSoup(raw_html, 'html.parser')
     potential_pastes = [tag for tag in soup.find_all("td")]
@@ -125,7 +126,9 @@ def parse_page_for_pastes(raw_html):
             pastebin_url, pastebin_ref = process_the_find(nice_find)
             all_pastebin_urls.add(pastebin_url)
             get_and_save_the_paste(the_target, pastebin_url, pastebin_ref)
+            pastes_saved = pastes_saved + 1
     loguru.logger.success("Turning the page.")
+    return(pastes_saved)
 
 
 def count_download_all_pastes(pastebin_profile, the_target):
@@ -135,7 +138,7 @@ def count_download_all_pastes(pastebin_profile, the_target):
     function that actually saves pastes from Pastebin and writes them to disk.
     :param pastebin_profile: The URL to the Pastebin user's profile.
     :param the_target: The Pastebin user that has been specified.
-    :return: Nothing at all.
+    :return: The total number of pastes that were saved
     """
     loguru.logger.info(pastebin_profile)
     the_hunt = simple_get(pastebin_profile)
@@ -144,20 +147,25 @@ def count_download_all_pastes(pastebin_profile, the_target):
     number_of_pages = count_all_pages(div_of_pages)
     loguru.logger.debug(
         "TARGET ANALYZED: {the_target} has {pages} pages of pastes.", the_target=the_target, pages=number_of_pages)
+    total_pastes_saved = int()
     for p in range(number_of_pages + 1):
         if p == 1:
+            pastes_saved = int()
             raw_html = simple_get(pastebin_profile)
-            parse_page_for_pastes(raw_html)
+            pastes_saved = parse_page_for_pastes(raw_html)
+            total_pastes_saved = pastes_saved + total_pastes_saved
         if p >= 2:
             new_case = str()
             new_case = pastebin_profile + "/" + str(p)
             raw_html = simple_get(new_case)
             try:
-                parse_page_for_pastes(raw_html)
+                pastes_saved = int()
+                pastes_saved = parse_page_for_pastes(raw_html)
+                total_pastes_saved = pastes_saved + total_pastes_saved
             except:
                 loguru.logger.info("No other pages.")
             loguru.logger.info(new_case)
-    return None
+    return total_pastes_saved
 
 
 def main(the_target):
@@ -170,7 +178,8 @@ def main(the_target):
         "PASTEBIN USER SELECTED: {the_user}", the_user=the_target)
     pastebin_profile = "https://pastebin.com/u/" + the_target
     loguru.logger.info("TARGET SIGHTED: {pbj}", pbj=pastebin_profile)
-    count_download_all_pastes(pastebin_profile, the_target)
+    how_many_pastes = count_download_all_pastes(pastebin_profile, the_target)
+    loguru.logger.success("I downloaded {how_many_pastes} pastes.", how_many_pastes=how_many_pastes)
     loguru.logger.success("TARGET NEUTRALIZED")
 
 
