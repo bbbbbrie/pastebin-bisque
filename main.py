@@ -8,7 +8,7 @@ from contextlib import closing
 from bs4 import BeautifulSoup
 
 
-## BEGIN https://realpython.com/python-web-scraping-practical-introduction/
+# BEGIN https://realpython.com/python-web-scraping-practical-introduction/
 def simple_get(url):
     """
     Attempts to get the content at `url` by making an HTTP GET request.
@@ -36,8 +36,8 @@ def is_good_response(resp):
     """
     content_type = resp.headers['Content-Type'].lower()
     return (resp.status_code == 200
-            and content_type is not None )
-            # and content_type.find('html') > -1)
+            and content_type is not None)
+    # and content_type.find('html') > -1)
 
 
 def log_error(e):
@@ -123,18 +123,26 @@ def parse_page_for_pastes(raw_html):
 
 
 def count_download_all_pastes(pastebin_profile, the_target):
-    # all_pastebin_urls = set()
+    """
+    This function takes a Pastebin username and user profile URL as input. In return, the number of pages of pastes 
+    for that user is printed. Additionally, this function calls parse_page_for_pastes() which in turn calls the 
+    function that actually saves pastes from Pastebin and writes them to disk.
+    :param pastebin_profile: The URL to the Pastebin user's profile.
+    :param the_target: The Pastebin user that has been specified.
+    :return: Nothing at all.
+    """
     loguru.logger.info(pastebin_profile)
     the_hunt = simple_get(pastebin_profile)
     chowder = BeautifulSoup(the_hunt, 'html.parser')
     div_of_pages = chowder.findAll("div", {"class": "pagination"})
     number_of_pages = count_all_pages(div_of_pages)
-    loguru.logger.debug("TARGET ANALYZED: {the_target} has {pages} pages of pastes.", the_target=the_target, pages=number_of_pages)
+    loguru.logger.debug(
+        "TARGET ANALYZED: {the_target} has {pages} pages of pastes.", the_target=the_target, pages=number_of_pages)
     for p in range(number_of_pages + 1):
         if p == 1:
             raw_html = simple_get(pastebin_profile)
             parse_page_for_pastes(raw_html)
-        if p >=2:
+        if p >= 2:
             new_case = str()
             new_case = pastebin_profile + "/" + str(p)
             raw_html = simple_get(new_case)
@@ -147,7 +155,8 @@ def count_download_all_pastes(pastebin_profile, the_target):
 
 
 def main(the_target):
-    loguru.logger.info("PASTEBIN USER SELECTED: {the_user}", the_user=the_target)
+    loguru.logger.info(
+        "PASTEBIN USER SELECTED: {the_user}", the_user=the_target)
     pastebin_profile = "https://pastebin.com/u/" + the_target
     loguru.logger.info("TARGET SIGHTED: {pbj}", pbj=pastebin_profile)
     count_download_all_pastes(pastebin_profile, the_target)
@@ -159,7 +168,8 @@ if __name__ == "__main__":
         description="""Pastebin User Scraper // This is a Python program that will list all retrieve the contents of 
                        all of the public pastes of the specified user. This is implemented using BeautifulSoup rather 
                        than the Pastebin API for educational purposes.""")
-    parser.add_argument('--username', '-u', default="Demonslay335",  type=str, help="The Pastebin user you want to target")
+    parser.add_argument('--username', '-u', default="Demonslay335",
+                        type=str, help="The Pastebin user you want to target")
     args = parser.parse_args()
     the_target = args.username
     main(the_target)
