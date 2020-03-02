@@ -90,9 +90,16 @@ def count_all_pages(div_of_pages):
     :param div_of_pages: The <div> containing the number of pages in the user's Pastebin profile
     :return: The number of pages that user's profile has.
     """
-    a_tags_in_div = [tag for tag in div_of_pages[0].find_all("a")]
-    # We subtract 1 because there are two links to the last page (by number and 'Oldest')
-    number_of_pages = len(a_tags_in_div) - 1
+    try:
+        a_tags_in_div = [tag for tag in div_of_pages[0].find_all("a")]
+    except:
+        number_of_pages = int()
+        number_of_pages = 1
+    else:
+        # We subtract 1 because there are two links to the last page (by number and 'Oldest')
+        number_of_pages = len(a_tags_in_div) - 1
+    finally:
+        loguru.logger.debug("We got through it.")
     return number_of_pages
 
 
@@ -131,7 +138,10 @@ def count_download_all_pastes(pastebin_profile, the_target):
             new_case = str()
             new_case = pastebin_profile + "/" + str(p)
             raw_html = simple_get(new_case)
-            parse_page_for_pastes(raw_html)
+            try:
+                parse_page_for_pastes(raw_html)
+            except:
+                loguru.logger.info("No other pages.")
             loguru.logger.info(new_case)
     return None
 
