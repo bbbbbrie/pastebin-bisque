@@ -2,6 +2,7 @@ import argparse
 import loguru
 import os
 import re
+import shutil
 from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
@@ -168,7 +169,16 @@ def count_download_all_pastes(pastebin_profile, the_target):
     return total_pastes_saved
 
 
-def main(the_target):
+def zip_the_pastes(username):
+    """
+    Collect the downloaded pastes into a zip file.
+    """
+    dir_name = "pastes/" + username
+    output_filename = username
+    shutil.make_archive(output_filename, 'zip', dir_name)
+    
+
+def main(the_target, to_zip):
     """
     This function accepts a username as input.
     :param the_target: Pastebin username
@@ -180,6 +190,11 @@ def main(the_target):
     loguru.logger.info("TARGET SIGHTED: {pbj}", pbj=pastebin_profile)
     how_many_pastes = count_download_all_pastes(pastebin_profile, the_target)
     loguru.logger.success("I downloaded {how_many_pastes} pastes.", how_many_pastes=how_many_pastes)
+    if to_zip:
+        loguru.logger.info("You want to zip.")
+        zip_the_pastes(the_target)
+    if not to_zip:
+        loguru.logger.info("You do not want to zip.")
     loguru.logger.success("TARGET NEUTRALIZED")
 
 
@@ -190,6 +205,8 @@ if __name__ == "__main__":
                        than the Pastebin API for educational purposes.""")
     parser.add_argument('--username', '-u', default="Demonslay335",
                         type=str, help="The Pastebin user you want to target")
+    parser.add_argument('--zip', '-z', action='store_true', help="Use if you want to zip the results.")
     args = parser.parse_args()
     the_target = args.username
-    main(the_target)
+    to_zip = args.zip
+    main(the_target, to_zip)
