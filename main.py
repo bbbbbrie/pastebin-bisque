@@ -187,7 +187,6 @@ def main(the_target, to_zip):
     loguru.logger.info(
         "PASTEBIN USER SELECTED: {the_user}", the_user=the_target)
     pastebin_profile = "https://pastebin.com/u/" + the_target
-    loguru.logger.info("TARGET SIGHTED: {pbj}", pbj=pastebin_profile)
     how_many_pastes = count_download_all_pastes(pastebin_profile, the_target)
     loguru.logger.success("I downloaded {how_many_pastes} pastes.", how_many_pastes=how_many_pastes)
     if to_zip:
@@ -195,7 +194,7 @@ def main(the_target, to_zip):
         zip_the_pastes(the_target)
     if not to_zip:
         loguru.logger.info("You do not want to zip.")
-    loguru.logger.success("TARGET NEUTRALIZED")
+    loguru.logger.success("All done.")
 
 
 if __name__ == "__main__":
