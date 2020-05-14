@@ -205,7 +205,7 @@ if __name__ == "__main__":
                        than the Pastebin API for educational purposes.""")
     parser.add_argument('--username', '-u', default="Demonslay335",
                         type=str, help="The Pastebin user you want to target")
-    parser.add_argument('--zip', '-z', action='store_true', help="Use if you want to zip the results.")
+    parser.add_argument('--zip', '-z', action='store_true', help="Use if you want to zip the results")
     args = parser.parse_args()
     the_target = args.username
     to_zip = args.zip
