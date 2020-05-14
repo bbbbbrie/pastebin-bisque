@@ -200,7 +200,7 @@ def main(the_target, to_zip):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="""Pastebin User Scraper // This is a Python program that will list all retrieve the contents of 
+            description="""Pastebin Bisque: A Pastebin User Scraper // This is a Python program that will list and retrieve the contents of 
                        all of the public pastes of the specified user. This is implemented using BeautifulSoup rather 
                        than the Pastebin API for educational purposes.""")
     parser.add_argument('--username', '-u', default="Demonslay335",
