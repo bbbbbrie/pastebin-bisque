@@ -60,10 +60,11 @@ def process_the_find(find):
     the_ref = find.get('href')
     pastebin_url = "https://pastebin.com/raw" + the_ref
     loguru.logger.info(find.contents)
-    return pastebin_url, the_ref
+    find_file_name = find.contents
+    return pastebin_url, the_ref, find_file_name
 
 
-def get_and_save_the_paste(the_target, pastebin_url, pastebin_ref):
+def get_and_save_the_paste(the_target, pastebin_url, pastebin_ref, find_file_name):
     """
     This function does the heavy listing. It does the Python equivalent of mkdir -p to prepare the environment for the
     download. The paste that has been identified is downloaded and saved to a directory that reflects the owning user.
@@ -78,7 +79,7 @@ def get_and_save_the_paste(the_target, pastebin_url, pastebin_ref):
     # Download the paste
     raw_html = simple_get(pastebin_url)
     # Write the paste to disk
-    paste_file = the_path + pastebin_ref
+    paste_file = the_path + pastebin_ref + "-" + find_file_name[0]
     loguru.logger.info("Saving to {paste_file}.", paste_file=paste_file)
     with open(paste_file, 'wb') as my_file:
         my_file.write(raw_html)
@@ -97,10 +98,14 @@ def count_all_pages(div_of_pages):
         number_of_pages = int()
         number_of_pages = 1
     else:
-        # We subtract 1 because there are two links to the last page (by number and 'Oldest')
-        number_of_pages = len(a_tags_in_div) - 1
+        # We used to subtract 1 because there are two links to the last page (by number and 'Oldest')
+        number_of_pages = len(a_tags_in_div) 
     finally:
         loguru.logger.debug("We got through it.")
+
+    if number_of_pages == 0:
+        loguru.logger.info("OOPS.")
+        number_of_pages = 1
     return number_of_pages
 
 
@@ -116,21 +121,21 @@ def parse_page_for_pastes(raw_html):
     all_pastebin_urls = set()
     soup = BeautifulSoup(raw_html, 'html.parser')
     potential_pastes = [tag for tag in soup.find_all("td")]
-    the_indicator = "i_p0"
     for i in range(len(potential_pastes)):
         pastes_per_page = pastes_per_page + 1
-        regex_search = re.search(the_indicator, str(potential_pastes[i]))
-        if regex_search:
-            the_contender = potential_pastes[i]
-            potential_links = [tag for tag in the_contender.find_all("a")]
+        the_contender = potential_pastes[i]
+        potential_links = [tag for tag in the_contender.find_all("a")]
+        potential_links = [link for link in potential_links if link]
+        if potential_links and "archive" not in potential_links[0]['href']:
             nice_find = potential_links[0]
-            pastebin_url, pastebin_ref = process_the_find(nice_find)
+            pastebin_url, pastebin_ref, find_file_name = process_the_find(nice_find)
             all_pastebin_urls.add(pastebin_url)
-            get_and_save_the_paste(the_target, pastebin_url, pastebin_ref)
+#            save_it_as = "/" + ''.join(nice_find.contents)
+            loguru.logger.info(find_file_name)
+            get_and_save_the_paste(the_target, pastebin_url, pastebin_ref, find_file_name)
             pastes_saved = pastes_saved + 1
     loguru.logger.success("Turning the page.")
-    return(pastes_saved)
-
+    return(pastes_saved)    
 
 def count_download_all_pastes(pastebin_profile, the_target):
     """
