@@ -7,7 +7,7 @@ from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
-
+from pathvalidate import sanitize_filename
 
 # BEGIN https://realpython.com/python-web-scraping-practical-introduction/
 def simple_get(url):
@@ -79,7 +79,8 @@ def get_and_save_the_paste(the_target, pastebin_url, pastebin_ref, find_file_nam
     # Download the paste
     raw_html = simple_get(pastebin_url)
     # Write the paste to disk
-    paste_file = the_path + pastebin_ref + "-" + find_file_name[0]
+    local_file_name = sanitize_filename(find_file_name[0])
+    paste_file = the_path + pastebin_ref + "-" + local_file_name
     loguru.logger.info("Saving to {paste_file}.", paste_file=paste_file)
     with open(paste_file, 'wb') as my_file:
         my_file.write(raw_html)
