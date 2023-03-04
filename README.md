@@ -10,4 +10,4 @@ Be sure to replace `pastebinusername` with a Pastebin username that you care abo
 
 The files will be downloaded to the `pastes` directory in your current directory. If you searched for pastes from the user `Demonslay335`, you'd see them in the `pastes/Demonslay335` folder. 
 
-[![asciicast](https://asciinema.org/a/306382.svg)](https://asciinema.org/a/306382)
+[![asciicast](https://asciinema.org/a/564569.svg)](https://asciinema.org/a/564569)
