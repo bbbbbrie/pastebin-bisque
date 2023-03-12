@@ -1,0 +1,32 @@
+site_name: Pastebin Bisque
+site_url: http://pastebin-bisque.readthedocs.io/ 
+site_dir: public
+docs_dir: ./docs
+repo_url: https://gitlab.com/brie/pastebin-bisque
+site_author: Brie Carranza
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+
+# Extensions
+markdown_extensions:
+  - footnotes
+  - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.magiclink
+  - pymdownx.tasklist
+  - pymdownx.emoji
+  - admonition
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - roamlinks
+
+
+
