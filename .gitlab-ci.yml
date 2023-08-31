@@ -1,0 +1,22 @@
+.shared_windows_runners
+   tags:
+     - shared-windows
+     - windows
+     - windows-1809
+
+before_script:
+  - Set-Variable -Name "time" -Value (date -Format "%H:%m")
+  - echo ${time}
+  - echo "started by ${GITLAB_USER_NAME}"
+  - choco install python --version=3.7.0 -y -f
+
+stages:
+  - build
+
+build_somthing:
+  extends:
+    - .shared_windows_runners
+  stage: build
+  script:
+    - "C:\\Python37\\python.exe -m pip install --upgrade setuptools"
+    - "C:\\Python37\\python.exe -m pip install -r requirements.txt"

@@ -74,7 +74,7 @@ def get_and_save_the_paste(the_target, pastebin_url, pastebin_ref, find_file_nam
     :return: Nothing.
     """
     the_path = "pastes/" + the_target
-    if not os.path.exists(the_path):
+    if not os.path.isdir(the_path):
         os.makedirs(the_path)
     # Download the paste
     raw_html = simple_get(pastebin_url)
