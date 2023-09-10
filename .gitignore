@@ -1,123 +1,82 @@
-v/
-pastes/
-venv/
-.idea/
-
-# Created by https://www.gitignore.io/api/code,python
-# Edit at https://www.gitignore.io/?templates=code,python
-
-### Code ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-### Python ###
-# Byte-compiled / optimized / DLL files
-__pycache__/
 *.py[cod]
-*$py.class
+__pycache__
+
+# Temp files
+.*.sw[po]
+*~
+*.bak
+.DS_Store
 
 # C extensions
 *.so
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
+# Build and package files
 *.egg
-MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+*.egg-info
+.bootstrap
+.build
+.cache
+.eggs
+.env
+.installed.cfg
+.ve
+bin
+build
+develop-eggs
+dist
+eggs
+lib
+lib64
+parts
+pip-wheel-metadata/
+pyvenv*/
+sdist
+var
+venv*/
+wheelhouse
 
 # Installer logs
 pip-log.txt
-pip-delete-this-directory.txt
 
 # Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
+.benchmarks
 .coverage
 .coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
+.pytest
 .pytest_cache/
+.tox
+coverage.xml
+htmlcov
+nosetests.xml
 
 # Translations
 *.mo
-*.pot
 
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# pyenv
-.python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# celery beat schedule file
-celerybeat-schedule
-
-# SageMath parsed files
-*.sage.py
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# Mr Developer
+# Buildout
 .mr.developer.cfg
+
+# IDE project files
+*.iml
+*.komodoproject
+.idea
 .project
 .pydevproject
+.vscode
 
-# mkdocs documentation
-/site
+# Complexity
+output/*.html
+output/*/index.html
 
-# mypy
+# Sphinx
+docs/_build
+
+# Mypy Cache
 .mypy_cache/
-.dmypy.json
-dmypy.json
 
-# Pyre type checker
-.pyre/
-
-# End of https://www.gitignore.io/api/code,python
-
+# ✨ Pastebin Bisque ✨
+pastes/
 *.zip
+.ruff_cache/
+
+# 🦄 Developer Preferences 🌈
+v/*

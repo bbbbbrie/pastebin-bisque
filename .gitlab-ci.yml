@@ -1,22 +1,147 @@
-.shared_windows_runners
-   tags:
-     - shared-windows
-     - windows
-     - windows-1809
-
-before_script:
-  - Set-Variable -Name "time" -Value (date -Format "%H:%m")
-  - echo ${time}
-  - echo "started by ${GITLAB_USER_NAME}"
-  - choco install python --version=3.7.0 -y -f
-
 stages:
+  - preflight
   - build
+  - qa
+  - test
+  - deploy
+  - publish
+  - verify
+  - experimental
 
-build_somthing:
-  extends:
-    - .shared_windows_runners
-  stage: build
+include:
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+
+.all-but-pyver:
+  when: manual
+  allow_failure: true
+  stage: test
   script:
-    - "C:\\Python37\\python.exe -m pip install --upgrade setuptools"
-    - "C:\\Python37\\python.exe -m pip install -r requirements.txt"
+    - python setup.py install
+    - pip install -e .[dev]
+    - pip install tox
+    - tox
+  artifacts:
+    when: always
+    reports:
+      junit: coverage.xml
+    paths:
+      - coverage.xml
+      - htmlcov/*
+
+🧪 Python 3.9:
+  extends: .all-but-pyver
+  image: python:3.9
+
+🧪 Python 3.10:
+  extends: .all-but-pyver
+  image: python:3.10
+
+🧪 Python 3.11:
+  image: python:3.11
+  extends: .all-but-pyver
+
+🧪 Python 3.12 rc 🥼:
+  stage: experimental
+  allow_failure: true
+  extends: .all-but-pyver
+  image: python:3.12-rc
+
+🧪 test with tox:
+    allow_failure: false
+    image: python:3.10
+    stage: preflight
+    script:
+    - python setup.py install
+    - pip install -e .[dev]
+    - pip install tox
+    - tox -p auto
+    artifacts:
+        when: always
+        reports:
+            junit: coverage.xml
+        paths:
+            - coverage.xml
+            - htmlcov/*
+        expire_in: 1 week
+
+.pages:
+  stage: deploy
+  needs: ["🧪 test with tox"]
+  script:
+    - mkdir public
+    - mv htmlcov/* public/
+  artifacts:
+    paths:
+      - public/
+
+.publish-the-package:
+  needs: ["🧪 test with tox"] # Comment to speed things up. 😬
+  image: python:latest
+  stage: deploy
+  before_script:
+    - pip install build twine
+
+🚀 deploy to 🦊💜 GitLab Package Registry:
+  stage: publish
+  extends: .publish-the-package
+  script:
+    - python -m build
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --verbose --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+
+🧾 check the 📦 package first 🥺:
+  stage: qa
+  extends: .publish-the-package
+  script:
+    - echo "🧾 check the 📦 package first 🥺"
+    - python -m build
+    - twine check dist/*
+
+🚀 deploy to 🧪  TestPyPi:
+  stage: test
+  when: always
+  extends: .publish-the-package
+  script:
+    - echo "🚀 Upload to TestPyPi..."
+    - python -m build
+    - TWINE_USERNAME=__token__ TWINE_REPOSITORY_URL=https://test.pypi.org/legacy/ twine upload --non-interactive --comment "🦄 hello world" --skip-existing --password $TESTPYPI_TOKEN  dist/*
+
+🚀 deploy to 🎊 PyPi:
+  needs: ["🚀 deploy to 🧪  TestPyPi","🧾 check the 📦 package first 🥺"]
+  stage: publish
+  when: manual
+  extends: .publish-the-package
+  script:
+    - echo "🚀 Upload to PyPi..."
+    - python -m build
+    - TWINE_USERNAME=__token__ TWINE_REPOSITORY_URL=https://upload.pypi.org/legacy/ twine upload --non-interactive --skip-existing --password $PYPI_TOKEN  dist/*
+
+😅 make sure the TestPyPi version works:
+  stage: verify
+  image: python:3.10
+  when: delayed
+  start_in: 2 minutes
+  needs: ["🚀 deploy to 🧪  TestPyPi"]
+  script:
+    - pip install -i https://test.pypi.org/simple/ pastebin-bisque==$(grep ^current_version .bumpversion.cfg | cut -d"=" -f2 | cut -d" " -f2)  --extra-index-url https://pypi.org/simple
+    - pastebin-bisque --help
+    - pastebin-bisque
+    - pastebin-bisque -z
+  artifacts:
+    paths:
+      - pastes/*
+      - /**zip
+
+🤞 make sure the PyPi version works 🍀:
+  stage: verify
+  image: python:3.10
+  needs: ["🚀 deploy to 🎊 PyPi"]
+  script:
+    - echo "🦄 Let's do this!"
+    - pip install pastebin-bisque==$(grep ^current_version .bumpversion.cfg | cut -d"=" -f2 | cut -d" " -f2)
+    - pastebin-bisque --help
+    - pastebin-bisque
+    - pastebin-bisque --username
+    - pastebin-bisque -z
+  artifacts:
+    paths:
+      - pastes/*
