@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.0.0 (09/15/2023)
+1.0.0 (09/10/2023)
 ------------------
 
 v1.0.0: 🍰 Now On PyPI
@@ -11,7 +11,7 @@ With this release, `pastebin-bisque` is now available on PyPI. You can install i
 
   pip install pastebin-bisque
 
-This release is timed to celebrate the `original author`_'s 🍰 birthday.
+This release is timed as an early celebration of the 🦄🌈  `original author`_'s 🍰 birthday.
 
 .. _original author: https://brie.dev/about
 
