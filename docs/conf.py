@@ -17,7 +17,7 @@ project = "pastebin_bisque"
 year = "2020-2023"
 author = "Brie Carranza"
 copyright = f"{year}, {author}"
-version = release = "0.6.33"
+version = release = "0.6.34"
 
 pygments_style = "trac"
 templates_path = ["."]
