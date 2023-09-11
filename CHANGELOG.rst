@@ -5,9 +5,9 @@ Changelog
 1.0.0 (09/15/2023)
 ------------------
 
-v1.0.0: 🍰 Now On PyPi
+v1.0.0: 🍰 Now On PyPI
 
-With this release, `pastebin-bisque` is now available on PyPi. You can install it with::
+With this release, `pastebin-bisque` is now available on PyPI. You can install it with::
 
   pip install pastebin-bisque
 

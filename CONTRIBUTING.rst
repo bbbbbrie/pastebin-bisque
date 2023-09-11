@@ -17,12 +17,12 @@ When reporting a bug please include:
 📚 Documentation Improvements
 =============================
 
-Documentation updates are welcome. That includes docstrings and links to blog posts or articles. Open an issue at https://github.com/bbbbbrie/pastebin-bisque/issues to start discussing your ideas.
+Documentation updates are welcome. That includes docstrings and links to blog posts or articles. Open `an issue <https://github.com/bbbbbrie/pastebin-bisque/issues>`_ to start discussing your ideas.
 
 💡 Feature Requests and Feedback
 ================================
 
-The best way to send feedback is to file an issue at https://github.com/bbbbbrie/pastebin-bisque/issues.
+The best way to send feedback is to file `an issue <https://github.com/bbbbbrie/pastebin-bisque/issues>`_.
 
 If you are proposing a feature:
 
@@ -30,7 +30,7 @@ If you are proposing a feature:
 * Keep the scope as narrow as possible, to make it easier to implement.
 * Remember that this is a volunteer-driven project, and that code contributions are welcome :)
 
-Development
+💻 Development
 ===========
 
 To set up `pastebin-bisque` for local development:
@@ -79,12 +79,14 @@ Pushing a new patch version::
 
 If you need some code review or feedback while you're developing the code just make the pull request and ask `Brie <https://infosec.exchange/@brie>`_ to take a look.
 
-For merging, you should:
+To make it easier for your work to be reviewed and merged, you should:
 
 1. Make sure that tests are passing (run ``tox``).
 2. Update documentation as appropriate.
-3. Add a note to ``CHANGELOG.rst`` about the changes.
+3. Add a note to ``CHANGELOG.rst`` describing the changes.
 4. Add yourself to ``AUTHORS.rst``.
+
+Don't let the perfect be the enemy of the good. Go ahead and `git commit` and `git push` so we can 🤝 get started.
 
 💡 Tips
 -------
@@ -95,12 +97,15 @@ To run a subset of tests::
 
 To run all the test environments in *parallel*::
 
-    tox -p auto
+    tox -p auto 
 
 For quick development::
 
    rm $(which pastebin-bisque) && python setup.py install && pastebin-bisque
 
-Installing the current version from TestPyPi::
+Installing the current version from TestPyPI::
 
    pip install -i https://test.pypi.org/simple/ pastebin-bisque==$(grep ^current_version .bumpversion.cfg | cut -d"=" -f2 | cut -d" " -f2)  --extra-index-url https://pypi.org/simple
+
+The `--extra-index-url https://pypi.org/simple` is important because the dependencies on TestPyPI are out-of-date or not present.
+
