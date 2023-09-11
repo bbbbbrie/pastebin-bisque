@@ -1,8 +1,8 @@
 stages:
   - preflight
   - build
-  - qa
   - test
+  - qa
   - deploy
   - publish
   - verify
@@ -80,6 +80,8 @@ include:
   stage: deploy
   before_script:
     - pip install build twine
+  rules:
+    - if: $CI_COMMIT_TAG =~ /v.*/
 
 🚀 deploy to 🦊💜 GitLab Package Registry:
   stage: publish
@@ -88,11 +90,11 @@ include:
     - python -m build
     - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --verbose --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
 
-🧾 check the 📦 package first 🥺:
+🧾 check the 📦 package 🥺:
   stage: qa
   extends: .publish-the-package
   script:
-    - echo "🧾 check the 📦 package first 🥺"
+    - echo "🧾 check the 📦 package 🥺"
     - python -m build
     - twine check dist/*
 
@@ -104,9 +106,12 @@ include:
     - echo "🚀 Upload to TestPyPi..."
     - python -m build
     - TWINE_USERNAME=__token__ TWINE_REPOSITORY_URL=https://test.pypi.org/legacy/ twine upload --non-interactive --comment "🦄 hello world" --skip-existing --password $TESTPYPI_TOKEN  dist/*
+  rules:
+    - if: $CI_COMMIT_TAG =~ /v.*/
+
 
 🚀 deploy to 🎊 PyPi:
-  needs: ["🚀 deploy to 🧪  TestPyPi","🧾 check the 📦 package first 🥺"]
+  needs: ["🚀 deploy to 🧪  TestPyPi","🧾 check the 📦 package 🥺"]
   stage: publish
   when: manual
   extends: .publish-the-package
@@ -118,9 +123,7 @@ include:
 😅 make sure the TestPyPi version works:
   stage: verify
   image: python:3.10
-  when: delayed
-  start_in: 2 minutes
-  needs: ["🚀 deploy to 🧪  TestPyPi"]
+  needs: ["🧾 check the 📦 package 🥺"]
   script:
     - pip install -i https://test.pypi.org/simple/ pastebin-bisque==$(grep ^current_version .bumpversion.cfg | cut -d"=" -f2 | cut -d" " -f2)  --extra-index-url https://pypi.org/simple
     - pastebin-bisque --help
@@ -130,6 +133,8 @@ include:
     paths:
       - pastes/*
       - /**zip
+  rules:
+    - if: $CI_COMMIT_TAG =~ /v.*/
 
 🤞 make sure the PyPi version works 🍀:
   stage: verify
@@ -145,3 +150,5 @@ include:
   artifacts:
     paths:
       - pastes/*
+  rules:
+    - if: $CI_COMMIT_TAG =~ /v.*/
