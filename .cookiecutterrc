@@ -54,7 +54,7 @@ default_context:
     sphinx_doctest: "yes"
     sphinx_theme: "sphinx-book-theme"
     test_matrix_separate_coverage: "yes"
-    version: "0.7.0"
+    version: "1.0.0"
     version_manager: "bump2version"
     website: "https://brie.dev"
     year_from: "2020"

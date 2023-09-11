@@ -13,7 +13,7 @@ def read(*names, **kwargs):
 
 setup(
     name="pastebin-bisque",
-    version="0.7.0",
+    version="1.0.0",
     license="LGPL-3.0-or-later",
     description="Scrape all public Pastebin pastes from a user.",
     long_description="{}\n{}".format(
