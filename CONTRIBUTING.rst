@@ -97,7 +97,7 @@ To run a subset of tests::
 
 To run all the test environments in *parallel*::
 
-    tox -p auto 
+    tox -p auto
 
 For quick development::
 
@@ -108,4 +108,3 @@ Installing the current version from TestPyPI::
    pip install -i https://test.pypi.org/simple/ pastebin-bisque==$(grep ^current_version .bumpversion.cfg | cut -d"=" -f2 | cut -d" " -f2)  --extra-index-url https://pypi.org/simple
 
 The `--extra-index-url https://pypi.org/simple` is important because the dependencies on TestPyPI are out-of-date or not present.
-
