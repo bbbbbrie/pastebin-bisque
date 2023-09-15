@@ -21,7 +21,7 @@ TL;DR - Scrape all public Pastebin pastes from a user.
     pip install pastebin-bisque
 
 ℹ️ Usage
-=======
+========
 
 ::
 
