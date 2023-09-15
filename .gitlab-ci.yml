@@ -139,13 +139,12 @@ include:
 🤞 make sure the PyPi version works 🍀:
   stage: verify
   image: python:3.10
-  needs: ["🚀 deploy to 🎊 PyPi"]
   script:
     - echo "🦄 Let's do this!"
     - pip install pastebin-bisque==$(grep ^current_version .bumpversion.cfg | cut -d"=" -f2 | cut -d" " -f2)
     - pastebin-bisque --help
     - pastebin-bisque
-    - pastebin-bisque --username
+    - pastebin-bisque --username catstestingcode
     - pastebin-bisque -z
   artifacts:
     paths:

@@ -20,6 +20,32 @@ TL;DR - Scrape all public Pastebin pastes from a user.
 
     pip install pastebin-bisque
 
+ℹ️ Usage
+========
+
+::
+
+   pastebin-bisque
+
+Specify a username:
+
+::
+
+   pastebin-bisque --username catstestingcode
+
+
+Zip the results:
+
+::
+
+   pastebin-bisque -z
+
+Download all of the public pastes for the `catstestingcode` user and save them in a `.zip` file:
+
+::
+
+   pastebin-bisque --username catstestingcode -z
+
 
 📚 Documentation
 ================
