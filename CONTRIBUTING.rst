@@ -19,6 +19,12 @@ When reporting a bug please include:
 
 Documentation updates are welcome. That includes docstrings and links to blog posts or articles. Open `an issue <https://github.com/bbbbbrie/pastebin-bisque/issues>`_ to start discussing your ideas.
 
+To make the changes directly, you'll want to run `pip install -r docs/requirements.txt` to set up the development dependencies for the docs. To build your changes into HTML that you can preview, do something like:
+
+    sphinx-build   docs  /tmp/thedocs
+
+You can then browse to `/tmp/thedocs` to view your changes in a browser.     
+
 💡 Feature Requests and Feedback
 ================================
 
@@ -31,7 +37,7 @@ If you are proposing a feature:
 * Remember that this is a volunteer-driven project, and that code contributions are welcome :)
 
 💻 Development
-===========
+==============
 
 To set up `pastebin-bisque` for local development:
 
@@ -39,33 +45,40 @@ To set up `pastebin-bisque` for local development:
    (look for the "Fork" button).
 2. Clone your fork locally
 
-3. Set up the development tools with one of these commands::
+3. Install the development tools with one of these commands::
 
     pip install  bump2version check-manifest docutils isort pre-commit pygments readme-renderer
     python -I -m pip install check-manifest docutils isort pre-commit pygments readme-renderer
 
-4. Create a branch for local development::
+4. Set up the development tools with::
+
+    pre-commit run --all-files
+
+5. Create a branch for local development::
 
     git checkout -b name-of-your-bugfix-or-feature
 
    Now you can make your changes locally.
 
-5. To do a quick test of your changes::
+6. To do a quick test of your changes::
 
-   python setup.py install
-   rm $(which pastebin-bisque) && python setup.py install # subsequent runs
+    python setup.py install
+    rm $(which pastebin-bisque) && python setup.py install # subsequent runs
 
-6. When you're done making changes run all the checks and docs builder with one command::
+7. When you're done making changes run all the checks and docs builder with one command::
 
     tox
 
-7. Commit your changes and push your branch to GitHub::
+8. Commit your changes and push your branch to GitHub::
 
     git add .
-    git commit -m "Your detailed description of your changes."
+    git commit -m "A brief description of a specific changes"
     git push origin name-of-your-bugfix-or-feature
 
-8. Submit a pull request through the GitHub website.
+9.  Submit a pull request through the GitHub website.
+
+Releasing new versions
+----------------------
 
 Pushing a new patch version::
 
@@ -73,6 +86,8 @@ Pushing a new patch version::
   git commit -am"✨ Add it all" && \
   bump2version patch && \
   git push --tags
+
+Replace `patch` with `minor` or `major` as appropriate. 
 
 ℹ️ Pull Request Guidelines
 --------------------------
