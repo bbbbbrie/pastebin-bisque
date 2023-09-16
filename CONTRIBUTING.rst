@@ -23,7 +23,7 @@ To make the changes directly, you'll want to run `pip install -r docs/requiremen
 
     sphinx-build   docs  /tmp/thedocs
 
-You can then browse to `/tmp/thedocs` to view your changes in a browser.     
+You can then browse to `/tmp/thedocs` to view your changes in a browser.
 
 💡 Feature Requests and Feedback
 ================================
@@ -52,7 +52,9 @@ To set up `pastebin-bisque` for local development:
 
 4. Set up the development tools with::
 
-    pre-commit run --all-files
+    pre-commit install
+
+   This will ensure that `pre-commit run --all-files` runs as a pre-commit `hook <https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks>`_ using the `pre-commit <https://pre-commit.com/>`_ framework.
 
 5. Create a branch for local development::
 
@@ -87,7 +89,7 @@ Pushing a new patch version::
   bump2version patch && \
   git push --tags
 
-Replace `patch` with `minor` or `major` as appropriate. 
+Replace `patch` with `minor` or `major` as appropriate.
 
 ℹ️ Pull Request Guidelines
 --------------------------
