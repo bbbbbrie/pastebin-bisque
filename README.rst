@@ -74,7 +74,7 @@ To run all the tests run::
 
     tox
 
-Consider using this to run the tests in parallel:
+Consider using this to run the tests in `parallel mode <https://tox.wiki/en/latest/user_guide.html#parallel-mode>`_:
 
     tox -p auto
 
