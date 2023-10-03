@@ -68,7 +68,7 @@ setup(
         "requests==2.31.0",
         "six==1.16.0",
         "soupsieve==2.5",
-        "urllib3==2.0.4",
+        "urllib3==2.0.6",
     ],
     extras_require={
         # eg:
