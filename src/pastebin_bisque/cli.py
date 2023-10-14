@@ -149,8 +149,6 @@ def parse_page_for_pastes(raw_html, the_target):
             nice_find = potential_links[0]
             pastebin_url, pastebin_ref, find_file_name = process_the_find(nice_find)
             all_pastebin_urls.add(pastebin_url)
-            #            save_it_as = "/" + ''.join(nice_find.contents)
-            # loguru.logger.info(find_file_name)
             get_and_save_the_paste(the_target, pastebin_url, pastebin_ref, find_file_name)
             pastes_saved = pastes_saved + 1
     loguru.logger.success("📄 Turning the page.")
