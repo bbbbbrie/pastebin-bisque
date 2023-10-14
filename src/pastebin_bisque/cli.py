@@ -36,7 +36,6 @@ def simple_get(url):
     try:
         with closing(get(url, stream=True, timeout=5)) as resp:
             if is_good_response(resp):
-                # loguru.logger.info("We found it.")
                 return resp.content
             else:
                 loguru.logger.error("Nothing happened.")
