@@ -28,11 +28,11 @@ def test_process_the_find():
 
 
 def test_get_and_save_the_paste():
-    the_target = "thecutestcat"
+    pastebin_user = "thecutestcat"
     pastebin_url = "https://pastebin.com/raw/hD7ZCsNt"
     pastebin_ref = "hD7ZCsNt"
     find_file_name = "// Perform some action with the data read"
-    omg = get_and_save_the_paste(the_target, pastebin_url, pastebin_ref, find_file_name)
+    omg = get_and_save_the_paste(pastebin_user, pastebin_url, pastebin_ref, find_file_name)
     assert omg is None
 
 
