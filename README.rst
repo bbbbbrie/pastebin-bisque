@@ -20,16 +20,55 @@ TL;DR - Scrape all public Pastebin pastes from a user.
 
     pip install pastebin-bisque
 
+Learn more on `PyPI <https://pypi.org/project/pastebin-bisque/>`_.
+
+ℹ️ Usage
+========
+
+::
+
+   pastebin-bisque
+
+Specify a username:
+
+::
+
+   pastebin-bisque --username catstestingcode
+
+
+Zip the results:
+
+::
+
+   pastebin-bisque -z
+
+Download all of the public pastes for the `catstestingcode` user and save them in a `.zip` file:
+
+::
+
+   pastebin-bisque --username catstestingcode -z
+
 
 📚 Documentation
 ================
 
+The documentation for `pastebin-bisque` is served via `Read the Docs <https://readthedocs.org>`_ and is available at:
 
 https://pastebin-bisque.readthedocs.io/
 
 
 💻 Development
 ==============
+
+🙏 Thanks for your interest in contributing to the development (and documentation) of `pastebin-bisque`. See the notes on :ref:`contributing` to learn more.
+
+🧪 Tests
+--------
+
+This project uses `GitLab CI <https://docs.gitlab.com/ee/ci/>`_, `tox <https://tox.wiki/en/4.11.3/>`_ and `Test PyPI <https://packaging.python.org/en/latest/guides/using-testpypi/>`_ for testing. See `tests/test_pastebin_bisque.py`.
+
+🏡 Local
+^^^^^^^^
 
 To run all the tests run::
 
@@ -55,3 +94,8 @@ Note, to combine the coverage data from all the tox environments run:
       - ::
 
             PYTEST_ADDOPTS=--cov-append tox
+
+💚 CI
+^^^^^
+
+See `.gitlab-ci.yml` for the tests that are performed via GitLab CI. You'll need to be a Maintainer to run the tests that interact with Test PyPI (or to release a new package to PyPI).
