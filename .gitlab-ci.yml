@@ -129,6 +129,7 @@ include:
     - pastebin-bisque --help
     - pastebin-bisque
     - pastebin-bisque -z
+    - pastebin-bisque -u catstestingcode
   artifacts:
     paths:
       - pastes/*

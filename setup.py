@@ -40,7 +40,6 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
@@ -55,7 +54,7 @@ setup(
         "💡 Issue Tracker": "https://github.com/bbbbbrie/pastebin-bisque/issues",
     },
     keywords=["pastebin", "osint", "security", "research", "scraping"],
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=[
         "loguru==0.7.1",
         "beautifulsoup4==4.12.2",
