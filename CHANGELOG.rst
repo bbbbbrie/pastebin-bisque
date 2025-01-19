@@ -2,6 +2,13 @@
 🎉 Changelog
 ============
 
+1.0.1 (01/18/2025)
+------------------
+
+v1.0.1: ✨ Better Docs, Less Python 3.7
+
+With this patch release, there are some slight improvements to the docs. Additionally, support for Python 3.7 in GitHub Actions is removed.
+
 1.0.0 (09/10/2023)
 ------------------
 
