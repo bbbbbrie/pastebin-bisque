@@ -1,7 +1,71 @@
 [build-system]
-requires = [
-    "setuptools>=30.3.0",
+requires = ["setuptools>=30.3.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pastebin-bisque"
+version = "1.0.1"
+description = "Scrape all public Pastebin pastes from a user."
+readme = "README.rst"
+requires-python = ">=3.8"
+license = { text = "LGPL-3.0-or-later" }
+authors = [
+    { name = "Brie Carranza", email = "hi@brie.ninja" }
 ]
+keywords = ["pastebin", "osint", "security", "research", "scraping"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+    "Operating System :: Unix",
+    "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Utilities"
+]
+
+dependencies = [
+    "loguru==0.7.1",
+    "beautifulsoup4==4.12.2",
+    "certifi==2023.7.22",
+    "chardet==5.2.0",
+    "charset-normalizer==3.2.0",
+    "Click==8.1.7",
+    "idna==3.4",
+    "pathvalidate==3.1.0",
+    "requests==2.31.0",
+    "six==1.16.0",
+    "soupsieve==2.5",
+    "urllib3==2.0.4"
+]
+
+[project.optional-dependencies]
+# Add extras if needed, e.g.:
+# rst = ["docutils>=0.11"]
+
+[project.urls]
+"📝 Documentation" = "https://pastebin-bisque.readthedocs.io/"
+"🚀 Changelog" = "https://pastebin-bisque.readthedocs.io/en/latest/changelog.html"
+"💡 Issue Tracker" = "https://github.com/bbbbbrie/pastebin-bisque/issues"
+
+[project.scripts]
+pastebin-bisque = "pastebin_bisque.cli:main"
+
+[tool.setuptools]
+packages = ["pastebin_bisque"]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools.dynamic]
+readme = { file = ["README.rst"], content-type = "text/x-rst" }
 
 [tool.ruff.per-file-ignores]
 "ci/*" = ["S"]
