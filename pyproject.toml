@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "pastebin-bisque"
 version = "1.0.1"
 description = "Scrape all public Pastebin pastes from a user."
-readme = "README.rst"
+readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "LGPL-3.0-or-later" }
 authors = [
