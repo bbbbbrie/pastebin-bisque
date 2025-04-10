@@ -1,4 +1,6 @@
-# 💻 Contributing to pastebin-bisque 💻
+---
+title: 🤝 Contributing to pastebin-bisque
+---
 
 👋 Hello, world. Contributions to `pastebin-bisque` are very
 welcome, and they are greatly appreciated! Every little bit helps, and
